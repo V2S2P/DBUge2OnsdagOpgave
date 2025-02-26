@@ -1,3 +1,5 @@
+
+import dtos.GenderCountDTO;
 import dtos.MemberAndSportsDTO;
 import dtos.NumberOfParticipantsPerSportDTO;
 import dtos.NumberOfParticipantsPerTeamDTO;
@@ -36,6 +38,9 @@ public class Main {
 
         List<MemberAndSportsDTO> dtoList2 = memberMapper.getMemberAndSportsById(10);
         dtoList2.forEach(System.out::println);
+
+        List<GenderCountDTO> dtoList3 = memberMapper.countGender();
+        dtoList3.forEach(System.out::println);
 
         /*  
             int newMemberId = insertMember(memberMapper);

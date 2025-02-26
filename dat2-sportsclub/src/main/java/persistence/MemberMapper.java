@@ -1,5 +1,6 @@
 package persistence;
 
+import dtos.GenderCountDTO;
 import dtos.MemberAndSportsDTO;
 import dtos.NumberOfParticipantsPerSportDTO;
 import dtos.NumberOfParticipantsPerTeamDTO;
@@ -41,6 +42,28 @@ public class MemberMapper {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return dtoList;
+    }
+    public List<GenderCountDTO> countGender(){
+            List<GenderCountDTO> dtoList = new ArrayList<>();
+            String sql = "SELECT COUNT(member.gender), member.gender " +
+                    "FROM member " +
+                    "GROUP BY member.gender";
+
+            try(Connection connection = database.connect()){
+                try (PreparedStatement ps = connection.prepareStatement(sql)){
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()){
+                        int count = rs.getInt(1);
+                        String gender = rs.getString(2);
+                        dtoList.add(new GenderCountDTO(gender, count));
+                    }
+                }catch (SQLException e){
+                    throw new RuntimeException("Error fetching gender counts",e);
+                }
+            }catch (SQLException throwables){
+                throwables.printStackTrace();
+            }
         return dtoList;
     }
     public List<MemberAndSportsDTO> getMemberAndSportsById(int id){
