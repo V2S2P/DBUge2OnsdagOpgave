@@ -61,7 +61,7 @@ public class MemberMapper {
                 Member member = null;
                 List<String> sports = new ArrayList<>();
 
-                if (rs.next()) {
+                while (rs.next()) {
                     if (member == null) {
                         member = new Member(rs.getInt("member_id"), rs.getString("name"), "", 0, "", "", 0);
                     }
@@ -164,7 +164,6 @@ public class MemberMapper {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-            int a = 1;
             return member;
         }
 
@@ -209,7 +208,7 @@ public class MemberMapper {
                         newId = idResultset.getInt(1);
                         member.setMemberId(newId);
                     } else {
-                        member = null;
+                        return null;
                     }
                 } catch (SQLException throwables) {
                     // TODO: Make own throwable exception and let it bubble upwards
